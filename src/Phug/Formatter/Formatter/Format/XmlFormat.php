@@ -517,7 +517,7 @@ class XmlFormat extends AbstractFormat
             }
             if ($empty) {
                 $data = new SplObjectStorage();
-                $data->attach(new ExpressionElement('[]'));
+                $data->offsetSet(new ExpressionElement('[]'));
                 $element->addAssignment(new AssignmentElement('attributes', $data, $element));
             }
         }

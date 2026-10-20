@@ -35,7 +35,7 @@ class AssignmentNodeCompiler extends AbstractNodeCompiler
                 $attributeElement->setOrder($attribute->getOrder());
             }
 
-            $attributes->attach($attributeElement);
+            $attributes->offsetSet($attributeElement);
         }
 
         return new AssignmentElement($name, $attributes, null, $node);

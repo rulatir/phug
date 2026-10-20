@@ -33,7 +33,7 @@ class InterpolationStartTokenHandler extends AbstractTokenHandler
             $node = $node->getParent();
         }
 
-        $state->getInterpolationStack()->attach($token->getEnd(), (object) [
+        $state->getInterpolationStack()->offsetSet($token->getEnd(), (object) [
             'currentNode' => $node,
             'parentNode'  => $state->getParentNode(),
         ]);

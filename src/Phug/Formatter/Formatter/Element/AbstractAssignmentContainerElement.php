@@ -30,7 +30,7 @@ abstract class AbstractAssignmentContainerElement extends AbstractElement implem
         }
 
         $element->setContainer($this);
-        $this->getAssignments()->attach($element);
+        $this->getAssignments()->offsetSet($element);
 
         return $this;
     }
@@ -44,7 +44,7 @@ abstract class AbstractAssignmentContainerElement extends AbstractElement implem
      */
     public function removedAssignment(AssignmentElement $element)
     {
-        $this->getAssignments()->detach($element);
+        $this->getAssignments()->offsetUnset($element);
 
         return $this;
     }

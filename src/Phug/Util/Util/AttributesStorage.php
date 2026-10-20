@@ -25,7 +25,7 @@ class AttributesStorage extends SplObjectStorage
             $object->setOrder($this->holder->getNextAttributeIndex());
         }
 
-        parent::attach($object, $info);
+        parent::offsetSet($object, $info);
     }
 
     #[ReturnTypeWillChange]

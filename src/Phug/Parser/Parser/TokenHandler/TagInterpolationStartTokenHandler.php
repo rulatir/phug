@@ -28,7 +28,7 @@ class TagInterpolationStartTokenHandler extends AbstractTokenHandler
             $state->pushInterpolationNode($node);
         }
 
-        $state->getInterpolationStack()->attach($token->getEnd(), (object) [
+        $state->getInterpolationStack()->offsetSet($token->getEnd(), (object) [
             'currentNode' => $node,
             'parentNode'  => $state->getParentNode(),
         ]);

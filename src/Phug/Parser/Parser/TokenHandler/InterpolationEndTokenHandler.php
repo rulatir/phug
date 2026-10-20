@@ -16,7 +16,7 @@ class InterpolationEndTokenHandler extends AbstractTokenHandler
         $state->setCurrentNode($nodes->currentNode);
         $state->setParentNode($nodes->parentNode);
         if ($node) {
-            $state->getInterpolationStack()->attach($node, $token);
+            $state->getInterpolationStack()->offsetSet($node, $token);
             $state->append($node);
         }
         $state->store();

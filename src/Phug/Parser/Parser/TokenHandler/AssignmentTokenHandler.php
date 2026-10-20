@@ -24,7 +24,7 @@ class AssignmentTokenHandler extends AbstractTokenHandler
         /** @var ElementNode|MixinCallNode $current */
         $current = $state->getCurrentNode();
         $node->setOrder($current->getNextAttributeIndex());
-        $current->getAssignments()->attach($node);
+        $current->getAssignments()->offsetSet($node);
 
         if ($state->expectNext([AttributeStartToken::class])) {
             $state->setCurrentNode($node);

@@ -31,7 +31,7 @@ class ElementNodeCompiler extends AbstractNodeCompiler
 
         $attributes = new SplObjectStorage();
         foreach ($node->getAttributes() as $attribute) {
-            $attributes->attach($compiler->compileNode($attribute, $parent));
+            $attributes->offsetSet($compiler->compileNode($attribute, $parent));
         }
         $markup = new MarkupElement($name, $node->isAutoClosed(), $attributes, $node);
         foreach ($node->getAssignments() as $assignment) {

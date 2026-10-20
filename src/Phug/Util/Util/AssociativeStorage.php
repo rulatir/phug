@@ -112,7 +112,7 @@ class AssociativeStorage extends SplObjectStorage
     private function attachReplaceMode(self $storage, $entity)
     {
         foreach ($storage->findAllByName($storage->identifyEntity($entity)) as $duplicate) {
-            $storage->detach($duplicate);
+            $storage->offsetUnset($duplicate);
         }
 
         return true;
@@ -143,7 +143,7 @@ class AssociativeStorage extends SplObjectStorage
         $handler = $this->modes[$this->mode];
 
         if ($handler($this, $object, $data)) {
-            parent::attach($object, $data);
+            parent::offsetSet($object, $data);
         }
     }
 
