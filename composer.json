@@ -83,6 +83,7 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.x-dev",
+            "dev-php85": "2.x-dev",
             "dev-facade": "0.4.x-dev"
         }
     },
