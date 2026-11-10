@@ -18,13 +18,52 @@ trait FileAdapterCacheToolsTrait
      */
     protected function cacheFileContents($destination, $output, $importsMap = [])
     {
-        $imports = file_put_contents(
+        $imports = $this->writeFileByRename(
             $destination.'.imports.serialize.txt',
             serialize($importsMap)
         ) ?: 0;
-        $template = file_put_contents($destination, $output);
+        $template = $this->writeFileByRename($destination, $output);
 
         return $template && $imports;
+    }
+
+    /**
+     * Write $contents to a temporary file in the directory of $path, then
+     * rename it to $path. rename() within one directory is atomic, so a
+     * process that reads $path while another writes it reads the previous
+     * file or the new one, never a partly written one. The file gets the mode
+     * file_put_contents() would give a new file (0666 minus the umask).
+     *
+     * @param string $path
+     * @param string $contents
+     *
+     * @return int|false bytes written, or false on failure
+     */
+    private function writeFileByRename($path, $contents)
+    {
+        $temporary = @tempnam(dirname($path), basename($path).'.tmp.');
+        if ($temporary === false) {
+            return false;
+        }
+        // tempnam() falls back to the system temporary directory when the
+        // given one is not writable; a rename() from there would copy across
+        // file systems, which is not atomic.
+        if (realpath(dirname($temporary)) !== realpath(dirname($path))) {
+            @unlink($temporary);
+
+            return false;
+        }
+        $bytes = file_put_contents($temporary, $contents);
+        if ($bytes === false
+            || !chmod($temporary, 0666 & ~umask())
+            || !rename($temporary, $path)
+        ) {
+            @unlink($temporary);
+
+            return false;
+        }
+
+        return $bytes;
     }
 
     /**
